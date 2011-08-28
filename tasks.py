@@ -31,6 +31,7 @@ if vars(args)['a,__add']:
     for arg in vars(args)['a,__add']:
         task += arg+' '
     task = task[:-1]
+    br.open("https://goodtodo.com/new.php")
     br.select_form(nr=0)
     br["title"] = task
     response = br.submit()
@@ -38,7 +39,6 @@ if vars(args)['a,__add']:
 
 # use a regex to pick the individual tasks off of the page
 taskPattern = re.compile(r'src="images/CheckboxUnchecked.gif" border="0" id="\d+" /></span>[\r\n]+												(.+)<span class')
-completedTaskPattern = re.compile(r'src="images/CheckboxChecked.gif" border="0" id="\d+" /></span>[\r\n]+												(.+)<span class')
 
 # print each task with a number beside it
 tasknum = 1
@@ -46,7 +46,9 @@ for task in re.findall(taskPattern, page):
     print(str(tasknum)+'. '+task)
     tasknum += 1
 
+# print a list of completed tasks
 if vars(args)['l,__list_all']:
+    completedTaskPattern = re.compile(r'src="images/CheckboxChecked.gif" border="0" id="\d+" /></span>[\r\n]+												(.+)<span class')
     print('\nCompleted Tasks:')
     for task in re.findall(completedTaskPattern, page):
         print(' - '+task)
