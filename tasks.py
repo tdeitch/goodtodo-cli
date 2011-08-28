@@ -24,6 +24,17 @@ br["password"] = pswd
 response = br.submit()
 page = response.read()
 
+# complete a task
+if vars(args)['c,__complete']:
+    tasknum = vars(args)['c,__complete']
+    idPattern = re.compile(r'src="images/CheckboxUnchecked.gif" border="0" id="(\d+)" /></span>[\r\n]+												.+<span class')
+    id = re.findall(idPattern, page)[tasknum-1]
+    br.open("https://goodtodo.com/detail.php?id="+id)
+    br.select_form(nr=0)
+    br.find_control("done").items[0].selected=True
+    response = br.submit()
+    page = response.read()
+
 # add a task
 if vars(args)['a,__add']:
     # convert the task into a string
