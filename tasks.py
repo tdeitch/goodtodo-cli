@@ -11,9 +11,11 @@ import argparse         # parse command-line arguments
 # parse command-line arguments
 parser = argparse.ArgumentParser(description='A command-line interface for GoodTodo.')
 parser.add_argument('-a,--add', action='store', nargs='+', metavar='TASK', help='Add a new task to the list')
+parser.add_argument('-c,--complete', action='store', metavar='NUMBER', type=int, help='Check a task off the list')
+parser.add_argument('-l,--list-all', action='store_true', help='List all tasks, including completed ones')
 args = parser.parse_args()
 
-# login to GoodTodo
+# login to GoodTodo and get the todo page
 br = mechanize.Browser()
 br.open("https://goodtodo.com/login.php")
 br.select_form(nr=0)
@@ -33,8 +35,18 @@ if vars(args)['a,__add']:
     br["title"] = task
     response = br.submit()
     page = response.read()
-# set the username and password
-# Open the Google sign-in page and sign-in to the user's Google account using mechanize
-taskPattern = re.compile(r'												(.+)<span class')
+
+# use a regex to pick the individual tasks off of the page
+taskPattern = re.compile(r'src="images/CheckboxUnchecked.gif" border="0" id="\d+" /></span>[\r\n]+												(.+)<span class')
+completedTaskPattern = re.compile(r'src="images/CheckboxChecked.gif" border="0" id="\d+" /></span>[\r\n]+												(.+)<span class')
+
+# print each task with a number beside it
+tasknum = 1
 for task in re.findall(taskPattern, page):
-    print(' - '+task)
+    print(str(tasknum)+'. '+task)
+    tasknum += 1
+
+if vars(args)['l,__list_all']:
+    print('\nCompleted Tasks:')
+    for task in re.findall(completedTaskPattern, page):
+        print(' - '+task)
