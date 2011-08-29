@@ -15,3 +15,5 @@ Usage
     -d YYYYMMDD [TASK]    View or add tasks on a given date
     -n DAYS [TASK]        View or add tasks a certain number of days away
     -l                    List all tasks, including completed ones
+    -o                    Open today's task list in a web browser
+    -v                    View a task's details in a web browser
