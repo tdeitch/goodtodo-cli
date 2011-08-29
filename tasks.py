@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 
-# set username and password
+################################################################################
+################################################################################
+
+# SET USERNAME AND PASSWORD HERE
 user = ""
 pswd = ""
+
+################################################################################
+################################################################################
 
 import re               # regular expression processing
 import mechanize        # web scraping
@@ -20,6 +26,12 @@ parser.add_argument('-l', action='store_true', help='List all tasks, including c
 parser.add_argument('-o', action='store_true', help='Open today\'s task list in a web browser')
 parser.add_argument('-v', action='store', metavar='NUMBER', type=int, help='View a task\'s details in a web browser')
 args = parser.parse_args()
+
+# check to make sure that login credentials are set
+if not user:
+    user = raw_input('Username: ')
+if not pswd:
+    pswd = raw_input('Password: ')
 
 # login to GoodTodo and get the todo page
 br = mechanize.Browser()
