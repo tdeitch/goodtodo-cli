@@ -72,14 +72,14 @@ if vars(args)['d']:
     task = ""
     for arg in vars(args)['d']:
         task += arg+' '
-    date = task[:10]
-    task = task[11:-1]
-    br.open("https://goodtodo.com/new.php?edate="+date)
+    date = task[:4]+'-'+task[4:6]+'-'+task[6:8]
+    task = task[8:-1]
+    response = br.open("https://goodtodo.com/new.php?edate="+date)
     if task is not '':
         br.select_form(nr=0)
         br["title"] = task
         response = br.submit()
-        page = response.read()
+    page = response.read()
 
 # view or add tasks a given number of days in the future
 if vars(args)['n']:
