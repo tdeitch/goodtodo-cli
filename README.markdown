@@ -3,7 +3,7 @@ GoodTodo-CLI
 
 GoodTodo-CLI is a command-line tool, written in Python, to view and manage your GoodTodo tasks in the terminal.
 
-![screenshot](https://github.com/tdeitch/goodtodo-cli/raw/master/screenshot.png)
+![screenshot](http://www.tdeitch.com/goodtodo-cli/screenshot.png)
 
 Installation
 ------------
